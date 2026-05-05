@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Новый профиль",
+    "Projects": [
+      {
+        "Path": "RPS.Server\\RPS.Server.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "RPS.Client\\RPS.Client.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

@@ -1,0 +1,12 @@
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\bin\Debug\net8.0\RPS.Shared.deps.json
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\bin\Debug\net8.0\RPS.Shared.dll
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\bin\Debug\net8.0\RPS.Shared.pdb
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\RPS.Shared.csproj.AssemblyReference.cache
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\RPS.Shared.GeneratedMSBuildEditorConfig.editorconfig
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\RPS.Shared.AssemblyInfoInputs.cache
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\RPS.Shared.AssemblyInfo.cs
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\RPS.Shared.csproj.CoreCompileInputs.cache
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\RPS.Shared.dll
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\refint\RPS.Shared.dll
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\RPS.Shared.pdb
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\ref\RPS.Shared.dll
