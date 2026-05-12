@@ -325,6 +325,17 @@ namespace RPS.Server
             OnLog?.Invoke($"✋ {handler.PlayerName} выбрал {GetChoiceEmoji(handler.CurrentChoice)}",
                 Brushes.White);
 
+            // НОВОЕ: Уведомляем оппонента что игрок сделал выбор
+            if (handler.Opponent != null && handler.Opponent.CurrentChoice == Choice.None)
+            {
+                await handler.Opponent.SendMessageAsync(new NetworkMessage
+                {
+                    Type = MessageType.OpponentMadeChoice,
+                    Data = "Opponent made choice"
+                });
+            }
+
+            // Проверяем, сделал ли оппонент выбор
             if (handler.Opponent != null && handler.Opponent.CurrentChoice != Choice.None)
             {
                 await CalculateResultAsync(handler, handler.Opponent);

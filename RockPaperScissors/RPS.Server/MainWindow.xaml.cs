@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Windows;
 using System.Windows.Media;
 
@@ -23,7 +27,7 @@ namespace RPS.Server
             gameServer = new GameServer();
             gameServer.OnLog += AddLog;
             gameServer.OnStatsUpdate += UpdateStats;
-            gameServer.OnPlayerListUpdate += UpdatePlayerList; // НОВОЕ!
+            gameServer.OnPlayerListUpdate += UpdatePlayerList;
 
             AddLog("✅ Сервер инициализирован", Brushes.LightGreen);
         }
@@ -46,7 +50,11 @@ namespace RPS.Server
                 StatusText.Text = $"Сервер работает на порту {port}";
                 PortTextBox.IsEnabled = false;
 
-                AddLog($"🚀 Запуск сервера на порту {port}...", Brushes.Cyan);
+                // Определяем и показываем IP-адрес
+                string ipAddress = GetLocalIPAddress();
+                ServerIpText.Text = ipAddress;
+
+                AddLog($"🚀 Запуск сервера на {ipAddress}:{port}...", Brushes.Cyan);
 
                 _ = gameServer.StartAsync(port);
             }
@@ -57,12 +65,35 @@ namespace RPS.Server
                 StartStopButton.Content = "▶️ ЗАПУСТИТЬ";
                 StatusText.Text = "Сервер остановлен";
                 PortTextBox.IsEnabled = true;
+                ServerIpText.Text = "Не определён";
 
                 AddLog("⏹️ Сервер остановлен", Brushes.Orange);
 
                 gameServer.Stop();
                 Players.Clear();
                 UpdateStats(0, 0, 0, 0);
+            }
+        }
+
+        // Получение локального IP-адреса
+        private string GetLocalIPAddress()
+        {
+            try
+            {
+                var host = Dns.GetHostEntry(Dns.GetHostName());
+                foreach (var ip in host.AddressList)
+                {
+                    // Ищем IPv4 адрес не локальный (не 127.0.0.1)
+                    if (ip.AddressFamily == AddressFamily.InterNetwork && !IPAddress.IsLoopback(ip))
+                    {
+                        return ip.ToString();
+                    }
+                }
+                return "127.0.0.1";
+            }
+            catch
+            {
+                return "Ошибка определения IP";
             }
         }
 
@@ -91,8 +122,8 @@ namespace RPS.Server
             });
         }
 
-        // НОВОЕ: Обновление списка игроков
-        private void UpdatePlayerList(System.Collections.Generic.List<PlayerInfo> players)
+        // Обновление списка игроков
+        private void UpdatePlayerList(List<PlayerInfo> players)
         {
             Dispatcher.Invoke(() =>
             {

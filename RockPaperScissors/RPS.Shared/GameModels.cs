@@ -31,9 +31,10 @@
         GameFull,          // Игра заполнена
         GameStarted,       // Игра началась
         MakeChoice,        // Игрок сделал выбор
+        OpponentMadeChoice, // НОВОЕ: Соперник сделал выбор
         GameResult,        // Результат раунда
         OpponentLeft,      // Соперник вышел
-        LeaveGame,         // Покинуть игру (НОВОЕ!)
+        LeaveGame,         // Покинуть игру
         ChatMessage,       // Сообщение в чат
         Error              // Ошибка
     }

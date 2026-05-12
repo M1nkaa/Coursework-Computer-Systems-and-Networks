@@ -35,7 +35,6 @@
                               Opacity="0.7"/>
                 </StackPanel>
 
-                <!-- ИМЯ ПОЛЬЗОВАТЕЛЯ -->
                 <Border Grid.Column="1" 
                        Background="{StaticResource PrimaryColor}"
                        CornerRadius="20"
@@ -52,9 +51,7 @@
                     </StackPanel>
                 </Border>
 
-                <!-- КНОПКИ УПРАВЛЕНИЯ -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                    <!-- Кнопка "Выйти из игры" (показывается только во время игры) -->
                     <Button Content="🚪 Выйти из игры"
                            Command="{Binding LeaveGameCommand}"
                            Visibility="{Binding IsInGame, Converter={StaticResource BoolToVis}}"
@@ -63,7 +60,6 @@
                            Margin="0,0,8,0"
                            Background="#F57C00"/>
 
-                    <!-- Кнопка подключения/отключения -->
                     <Button Content="🔌 Подключиться"
                            Command="{Binding ConnectCommand}"
                            Visibility="{Binding IsNotConnected, Converter={StaticResource BoolToVis}}"
@@ -116,7 +112,7 @@
             </StackPanel>
         </Border>
 
-        <!-- ========== ЛОББИ (Список игр) ========== -->
+        <!-- ========== ЛОББИ ========== -->
         <Grid Grid.Row="2" Visibility="{Binding ShowLobby, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -124,7 +120,6 @@
                 <ColumnDefinition Width="280"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Список доступных игр -->
             <Border Grid.Column="0" Style="{StaticResource Card}">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -162,7 +157,6 @@
                 </Grid>
             </Border>
 
-            <!-- Панель действий -->
             <Border Grid.Column="2" Style="{StaticResource Card}">
                 <StackPanel>
                     <TextBlock Text="Действия" Style="{StaticResource Headline6}" Margin="0,0,0,15"/>
@@ -197,8 +191,12 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- ТАБЛО СЧЁТА -->
-            <Border Grid.Row="0" Style="{StaticResource Card}" Margin="0,0,0,10" Padding="15">
+            <!-- ТАБЛО СЧЁТА (скрывается во время анимации) -->
+            <Border Grid.Row="0" 
+                    Style="{StaticResource Card}" 
+                    Margin="0,0,0,10" 
+                    Padding="15"
+                    Visibility="{Binding HideScoreboard, Converter={StaticResource InverseBoolToVis}}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -206,7 +204,6 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Игрок -->
                     <StackPanel Grid.Column="0" HorizontalAlignment="Center">
                         <TextBlock Text="{Binding PlayerName}" 
                                   Style="{StaticResource Headline6}"
@@ -224,7 +221,6 @@
                                   Margin="0,3,0,0"/>
                     </StackPanel>
 
-                    <!-- VS -->
                     <Border Grid.Column="1" 
                            Background="{StaticResource PrimaryColor}"
                            CornerRadius="25"
@@ -238,7 +234,6 @@
                                   HorizontalAlignment="Center"/>
                     </Border>
 
-                    <!-- Соперник -->
                     <StackPanel Grid.Column="2" HorizontalAlignment="Center">
                         <TextBlock Text="{Binding OpponentName}" 
                                   Style="{StaticResource Headline6}"
@@ -258,74 +253,91 @@
                 </Grid>
             </Border>
 
+            <!-- АНИМАЦИЯ БИТВЫ -->
+            <Border Grid.Row="0" 
+        Background="{StaticResource CardBackground}"
+        CornerRadius="12"
+        Margin="0,0,0,10" 
+        Padding="30,20"
+        x:Name="AnimationBorder"
+        Visibility="{Binding ShowAnimation, Converter={StaticResource BoolToVis}}"
+        IsVisibleChanged="AnimationBorder_IsVisibleChanged">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Левая рука (ВЫ) -->
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding PlayerName}" 
+                      FontSize="18"
+                      FontWeight="Bold"
+                      HorizontalAlignment="Center"
+                      Margin="0,0,0,15"/>
+
+                        <Viewbox Width="100" Height="100">
+                            <TextBlock Text="{Binding LeftPlayerEmoji}" x:Name="LeftHand">
+                                <TextBlock.RenderTransform>
+                                    <TranslateTransform x:Name="LeftHandTransform" Y="0"/>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                        </Viewbox>
+                    </StackPanel>
+
+                    <!-- Центр -->
+                    <TextBlock Grid.Column="1" 
+                  Text="⚔️" 
+                  FontSize="40"
+                  Margin="40,0"
+                  VerticalAlignment="Center"
+                  HorizontalAlignment="Center"/>
+
+                    <!-- Правая рука (СОПЕРНИК) -->
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding OpponentName}" 
+                      FontSize="18"
+                      FontWeight="Bold"
+                      HorizontalAlignment="Center"
+                      Margin="0,0,0,15"/>
+
+                        <Viewbox Width="100" Height="100">
+                            <TextBlock Text="{Binding RightPlayerEmoji}" x:Name="RightHand">
+                                <TextBlock.RenderTransform>
+                                    <TranslateTransform x:Name="RightHandTransform" Y="0"/>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                        </Viewbox>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
             <!-- РЕЗУЛЬТАТ РАУНДА -->
             <Border Grid.Row="1" 
                     Style="{StaticResource Card}" 
                     Margin="0,0,0,10"
-                    Padding="20,15">
-                <StackPanel>
-                    <TextBlock Text="{Binding ResultMessage}" 
-                              FontSize="18"
-                              FontWeight="SemiBold"
-                              HorizontalAlignment="Center"
-                              TextAlignment="Center"
-                              TextWrapping="Wrap"
-                              Foreground="{Binding ResultColor}"
-                              LineHeight="24"/>
-
-                    <!-- Индикатор ожидания -->
-                    <StackPanel Orientation="Horizontal" 
-                               HorizontalAlignment="Center" 
-                               Margin="0,10,0,0">
-                        <TextBlock Text="●" FontSize="20" Foreground="#CDDC39" Margin="4,0">
-                            <TextBlock.Triggers>
-                                <EventTrigger RoutedEvent="Loaded">
-                                    <BeginStoryboard>
-                                        <Storyboard RepeatBehavior="Forever">
-                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
-                                                           From="1" To="0.2" Duration="0:0:0.8" 
-                                                           AutoReverse="True"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </TextBlock.Triggers>
-                        </TextBlock>
-                        <TextBlock Text="●" FontSize="20" Foreground="#CDDC39" Margin="4,0">
-                            <TextBlock.Triggers>
-                                <EventTrigger RoutedEvent="Loaded">
-                                    <BeginStoryboard>
-                                        <Storyboard RepeatBehavior="Forever">
-                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
-                                                           From="1" To="0.2" Duration="0:0:0.8" 
-                                                           AutoReverse="True" BeginTime="0:0:0.2"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </TextBlock.Triggers>
-                        </TextBlock>
-                        <TextBlock Text="●" FontSize="20" Foreground="#CDDC39" Margin="4,0">
-                            <TextBlock.Triggers>
-                                <EventTrigger RoutedEvent="Loaded">
-                                    <BeginStoryboard>
-                                        <Storyboard RepeatBehavior="Forever">
-                                            <DoubleAnimation Storyboard.TargetProperty="Opacity" 
-                                                           From="1" To="0.2" Duration="0:0:0.8" 
-                                                           AutoReverse="True" BeginTime="0:0:0.4"/>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </TextBlock.Triggers>
-                        </TextBlock>
-                    </StackPanel>
-                </StackPanel>
+                    Padding="20,15"
+                    Visibility="{Binding ShowAnimation, Converter={StaticResource InverseBoolToVis}}">
+                <TextBlock Text="{Binding ResultMessage}" 
+                          FontSize="18"
+                          FontWeight="SemiBold"
+                          HorizontalAlignment="Center"
+                          TextAlignment="Center"
+                          TextWrapping="Wrap"
+                          Foreground="{Binding ResultColor}"
+                          LineHeight="24"/>
             </Border>
 
             <!-- КНОПКИ ВЫБОРА -->
             <Grid Grid.Row="2">
                 <UniformGrid Columns="3" Rows="1" Margin="15,0">
 
-                    <!-- КАМЕНЬ -->
-                    <Button Command="{Binding RockCommand}" Margin="8" Height="160">
+                    <Button Command="{Binding RockCommand}" 
+                            Margin="8" 
+                            Height="160"
+                            IsEnabled="{Binding CanMakeChoice}">
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="12" ShadowDepth="3" Opacity="0.4"/>
                         </Button.Effect>
@@ -338,8 +350,10 @@
                         </StackPanel>
                     </Button>
 
-                    <!-- БУМАГА -->
-                    <Button Command="{Binding PaperCommand}" Margin="8" Height="160">
+                    <Button Command="{Binding PaperCommand}" 
+                            Margin="8" 
+                            Height="160"
+                            IsEnabled="{Binding CanMakeChoice}">
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="12" ShadowDepth="3" Opacity="0.4"/>
                         </Button.Effect>
@@ -352,8 +366,10 @@
                         </StackPanel>
                     </Button>
 
-                    <!-- НОЖНИЦЫ -->
-                    <Button Command="{Binding ScissorsCommand}" Margin="8" Height="160">
+                    <Button Command="{Binding ScissorsCommand}" 
+                            Margin="8" 
+                            Height="160"
+                            IsEnabled="{Binding CanMakeChoice}">
                         <Button.Effect>
                             <DropShadowEffect BlurRadius="12" ShadowDepth="3" Opacity="0.4"/>
                         </Button.Effect>
@@ -381,14 +397,12 @@
                 Width="600"
                 MaxHeight="500">
             <StackPanel>
-                <!-- Заголовок -->
                 <TextBlock Text="🏁 Игра завершена!" 
                           FontSize="32"
                           FontWeight="Bold"
                           HorizontalAlignment="Center"
                           Margin="0,0,0,25"/>
 
-                <!-- Итоговый счёт -->
                 <Border Background="{StaticResource CardBackground}" 
                        CornerRadius="12" 
                        Padding="30,20"
@@ -400,7 +414,6 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Вы -->
                         <StackPanel Grid.Column="0" HorizontalAlignment="Center">
                             <TextBlock Text="{Binding PlayerName}" 
                                       FontSize="18"
@@ -414,7 +427,6 @@
                                       Foreground="{StaticResource PrimaryColor}"/>
                         </StackPanel>
 
-                        <!-- Разделитель -->
                         <TextBlock Grid.Column="1" 
                                   Text="—" 
                                   FontSize="36"
@@ -423,7 +435,6 @@
                                   VerticalAlignment="Center"
                                   Opacity="0.5"/>
 
-                        <!-- Соперник -->
                         <StackPanel Grid.Column="2" HorizontalAlignment="Center">
                             <TextBlock Text="{Binding OpponentName}" 
                                       FontSize="18"
@@ -439,7 +450,6 @@
                     </Grid>
                 </Border>
 
-                <!-- Сообщение о результате -->
                 <TextBlock Text="{Binding GameEndMessage}" 
                           FontSize="15"
                           HorizontalAlignment="Center"
@@ -449,7 +459,6 @@
                           LineHeight="22"
                           TextWrapping="Wrap"/>
 
-                <!-- Кнопки ДЛЯ ВСЕХ (и хоста, и не-хоста) -->
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -457,25 +466,20 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Кнопка "Создать новую игру" для ВСЕХ -->
                     <Button Grid.Column="0"
+                           Content="🎮 Создать новую игру"
                            Command="{Binding CreateNewGameAfterEndCommand}"
-                           Height="60"
+                           Height="55"
                            Background="#4CAF50"
-                           FontSize="14"
-                           FontWeight="SemiBold">
-                        <StackPanel>
-                            <TextBlock Text="🎮 Создать новую" HorizontalAlignment="Center"/>
-                            <TextBlock Text="игру" HorizontalAlignment="Center" Margin="0,2,0,0"/>
-                        </StackPanel>
-                    </Button>
+                           FontSize="13"
+                           FontWeight="SemiBold"/>
 
                     <Button Grid.Column="2"
                            Content="🚪 Выйти в лобби"
                            Command="{Binding ExitToLobbyCommand}"
-                           Height="60"
+                           Height="55"
                            Background="#F44336"
-                           FontSize="14"
+                           FontSize="13"
                            FontWeight="SemiBold"/>
                 </Grid>
             </StackPanel>

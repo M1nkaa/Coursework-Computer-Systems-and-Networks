@@ -1,11 +1,17 @@
 ﻿<Application x:Class="RPS.Client.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:RPS.Client.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>
+
             <!-- Конвертеры -->
             <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <converters:InverseBooleanToVisibilityConverter x:Key="InverseBoolToVis"/>
+            <converters:BoolToOpacityConverter x:Key="BoolToOpacity"/>
 
             <!-- ЦВЕТА -->
             <SolidColorBrush x:Key="PrimaryColor" Color="#673AB7"/>

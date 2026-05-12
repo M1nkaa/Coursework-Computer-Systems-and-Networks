@@ -10,3 +10,4 @@ E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\
 E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\refint\RPS.Shared.dll
 E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\RPS.Shared.pdb
 E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\ref\RPS.Shared.dll
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Shared\obj\Debug\net8.0\RPS.Shared.sourcelink.json

@@ -136,8 +136,62 @@ namespace RPS.Client.ViewModels
         public bool IsHostPlayer => isHost;
         public bool IsNotHostPlayer => !isHost;
 
-        // НОВОЕ: Флаг "я сам вышел из игры"
         private bool iLeavingGame = false;
+
+        // Флаг "я уже сделал выбор"
+        private bool hasPlayerMadeChoice = false;
+        public bool HasPlayerMadeChoice
+        {
+            get => hasPlayerMadeChoice;
+            set
+            {
+                hasPlayerMadeChoice = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(CanMakeChoice));
+            }
+        }
+
+        // Можно ли делать выбор
+        public bool CanMakeChoice => IsInGame && !HasPlayerMadeChoice && !ShowAnimation;
+
+        // Показываем анимацию
+        private bool showAnimation = false;
+        public bool ShowAnimation
+        {
+            get => showAnimation;
+            set { showAnimation = value; OnPropertyChanged(); }
+        }
+
+        // Эмодзи для анимации (два кулачка)
+        private string leftPlayerEmoji = "✊";
+        public string LeftPlayerEmoji
+        {
+            get => leftPlayerEmoji;
+            set { leftPlayerEmoji = value; OnPropertyChanged(); }
+        }
+
+        private string rightPlayerEmoji = "✊";
+        public string RightPlayerEmoji
+        {
+            get => rightPlayerEmoji;
+            set { rightPlayerEmoji = value; OnPropertyChanged(); }
+        }
+
+        // Скрывать табло во время анимации
+        private bool hideScoreboard = false;
+        public bool HideScoreboard
+        {
+            get => hideScoreboard;
+            set { hideScoreboard = value; OnPropertyChanged(); }
+        }
+
+        // НОВОЕ: Для анимации тряски
+        private bool isShaking = false;
+        public bool IsShaking
+        {
+            get => isShaking;
+            set { isShaking = value; OnPropertyChanged(); }
+        }
 
         public ObservableCollection<GameRoomViewModel> AvailableGames { get; set; }
 
@@ -146,6 +200,14 @@ namespace RPS.Client.ViewModels
         {
             get => selectedGame;
             set { selectedGame = value; OnPropertyChanged(); }
+        }
+
+        // НОВОЕ: Триггер для запуска анимации
+        private bool animationTrigger = false;
+        public bool AnimationTrigger
+        {
+            get => animationTrigger;
+            set { animationTrigger = value; OnPropertyChanged(); }
         }
 
         #endregion
@@ -161,8 +223,8 @@ namespace RPS.Client.ViewModels
         public ICommand RockCommand { get; }
         public ICommand PaperCommand { get; }
         public ICommand ScissorsCommand { get; }
+        public ICommand CreateNewGameAfterEndCommand { get; }
         public ICommand ExitToLobbyCommand { get; }
-        public ICommand CreateNewGameAfterEndCommand { get; } 
 
         #endregion
 
@@ -179,22 +241,21 @@ namespace RPS.Client.ViewModels
 
             ConnectCommand = new AsyncRelayCommand(ConnectToServer, () => !IsConnected);
             DisconnectCommand = new RelayCommand(DisconnectFromServer, () => IsConnected);
-            LeaveGameCommand = new AsyncRelayCommand(async () => await LeaveGameAsync(), () => IsInGame);
+            LeaveGameCommand = new AsyncRelayCommand(LeaveGameAsync, () => IsInGame);
             CreateGameCommand = new AsyncRelayCommand(CreateGame, () => ShowLobby);
             RefreshGamesCommand = new AsyncRelayCommand(RefreshGames, () => ShowLobby);
             JoinGameCommand = new AsyncRelayCommand(JoinGame, () => ShowLobby && SelectedGame != null);
-            RockCommand = new AsyncRelayCommand(() => MakeChoice(Choice.Rock), () => CanPlay);
-            PaperCommand = new AsyncRelayCommand(() => MakeChoice(Choice.Paper), () => CanPlay);
-            ScissorsCommand = new AsyncRelayCommand(() => MakeChoice(Choice.Scissors), () => CanPlay);
-            ExitToLobbyCommand = new RelayCommand(ExitToLobby);
+            RockCommand = new AsyncRelayCommand(() => MakeChoice(Choice.Rock), () => CanMakeChoice);
+            PaperCommand = new AsyncRelayCommand(() => MakeChoice(Choice.Paper), () => CanMakeChoice);
+            ScissorsCommand = new AsyncRelayCommand(() => MakeChoice(Choice.Scissors), () => CanMakeChoice);
             CreateNewGameAfterEndCommand = new AsyncRelayCommand(CreateNewGameAfterEnd);
+            ExitToLobbyCommand = new RelayCommand(ExitToLobby);
         }
 
         #endregion
 
         #region Methods (Методы)
 
-        // Подключение к серверу
         private async Task ConnectToServer()
         {
             if (string.IsNullOrWhiteSpace(PlayerName))
@@ -229,7 +290,6 @@ namespace RPS.Client.ViewModels
             }
         }
 
-        // Отключение от сервера
         private void DisconnectFromServer()
         {
             networkService.Disconnect();
@@ -240,7 +300,6 @@ namespace RPS.Client.ViewModels
             AvailableGames.Clear();
         }
 
-        // Выход из игры в лобби
         private async Task LeaveGameAsync()
         {
             var result = MessageBox.Show(
@@ -251,28 +310,23 @@ namespace RPS.Client.ViewModels
 
             if (result == MessageBoxResult.Yes)
             {
-                // Помечаем что МЫ САМИ выходим
                 iLeavingGame = true;
 
-                // ВАЖНО: Отправляем серверу сообщение о выходе
                 await networkService.SendMessageAsync(new NetworkMessage
                 {
                     Type = MessageType.LeaveGame,
                     PlayerName = PlayerName
                 });
 
-                // Сбрасываем локальное состояние
                 ResetGameState();
                 StatusMessage = "Вы вышли из игры";
                 await RefreshGames();
 
-                // Через секунду сбрасываем флаг
                 await Task.Delay(1000);
                 iLeavingGame = false;
             }
         }
 
-        // Создать игру
         private async Task CreateGame()
         {
             isHost = true;
@@ -285,7 +339,6 @@ namespace RPS.Client.ViewModels
             });
         }
 
-        // Обновить список игр
         private async Task RefreshGames()
         {
             await networkService.SendMessageAsync(new NetworkMessage
@@ -295,7 +348,6 @@ namespace RPS.Client.ViewModels
             });
         }
 
-        // Присоединиться к игре
         private async Task JoinGame()
         {
             if (SelectedGame == null) return;
@@ -311,11 +363,12 @@ namespace RPS.Client.ViewModels
             });
         }
 
-        // Выбор (камень/ножницы/бумага)
         private async Task MakeChoice(Choice choice)
         {
-            ResultMessage = $"Вы выбрали: {GetChoiceText(choice)}\n\n⏳ Ожидание соперника...";
-            ResultColor = "#2196F3";
+            HasPlayerMadeChoice = true;
+
+            ResultMessage = $"Вы выбрали: {GetChoiceText(choice)}\n\n⏳ Ожидание хода соперника...";
+            ResultColor = "#FFA726";
 
             await networkService.SendMessageAsync(new NetworkMessage
             {
@@ -325,22 +378,11 @@ namespace RPS.Client.ViewModels
             });
         }
 
-        // Выйти в лобби
-        private void ExitToLobby()
-        {
-            ShowGameEndScreen = false;
-            ResetGameState();
-            StatusMessage = "В лобби";
-            _ = RefreshGames();
-        }
-
-        // НОВОЕ: Создать новую игру после завершения предыдущей
         private async Task CreateNewGameAfterEnd()
         {
             ShowGameEndScreen = false;
             ResetGameState();
 
-            // Создаём новую игру
             isHost = true;
             StatusMessage = "Создание игры...";
 
@@ -351,7 +393,14 @@ namespace RPS.Client.ViewModels
             });
         }
 
-        // Обработка сообщений от сервера
+        private void ExitToLobby()
+        {
+            ShowGameEndScreen = false;
+            ResetGameState();
+            StatusMessage = "В лобби";
+            _ = RefreshGames();
+        }
+
         private void OnMessageReceived(NetworkMessage message)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -359,11 +408,9 @@ namespace RPS.Client.ViewModels
                 switch (message.Type)
                 {
                     case MessageType.Connect:
-                        // Подключение подтверждено
                         break;
 
                     case MessageType.CreateGame:
-                        // Игра создана - переходим в режим ожидания
                         IsInGame = true;
                         StatusMessage = "Игра создана! Ожидание соперника...";
                         ResultMessage = "🎮 Ваша игра создана!\n\n⏳ Ожидание соперника...";
@@ -371,15 +418,15 @@ namespace RPS.Client.ViewModels
                         OpponentName = "Ожидание...";
                         PlayerScore = 0;
                         OpponentScore = 0;
+                        HasPlayerMadeChoice = false;
+                        OnPropertyChanged(nameof(CanMakeChoice));
                         break;
 
                     case MessageType.GamesList:
-                        // Получен список игр
                         UpdateGamesList(message.Data);
                         break;
 
                     case MessageType.GameStarted:
-                        // Соперник присоединился (вы - хост)
                         OpponentName = message.Data;
                         IsInGame = true;
                         StatusMessage = $"🎮 Играете с: {OpponentName}";
@@ -387,10 +434,11 @@ namespace RPS.Client.ViewModels
                         ResultColor = "#4CAF50";
                         PlayerScore = 0;
                         OpponentScore = 0;
+                        HasPlayerMadeChoice = false;
+                        OnPropertyChanged(nameof(CanMakeChoice));
                         break;
 
                     case MessageType.GameJoined:
-                        // Вы присоединились к игре
                         OpponentName = message.Data;
                         IsInGame = true;
                         StatusMessage = $"🎮 Играете с: {OpponentName}";
@@ -398,6 +446,8 @@ namespace RPS.Client.ViewModels
                         ResultColor = "#4CAF50";
                         PlayerScore = 0;
                         OpponentScore = 0;
+                        HasPlayerMadeChoice = false;
+                        OnPropertyChanged(nameof(CanMakeChoice));
                         break;
 
                     case MessageType.GameFull:
@@ -414,6 +464,14 @@ namespace RPS.Client.ViewModels
                         HandleOpponentLeft(message.Data);
                         break;
 
+                    case MessageType.OpponentMadeChoice:
+                        if (!HasPlayerMadeChoice)
+                        {
+                            ResultMessage = "⚡ Соперник уже сделал выбор!\n\n👇 Сделайте свой ход!";
+                            ResultColor = "#FF9800";
+                        }
+                        break;
+
                     case MessageType.Error:
                         MessageBox.Show(message.Data, "Ошибка",
                             MessageBoxButton.OK, MessageBoxImage.Error);
@@ -422,16 +480,13 @@ namespace RPS.Client.ViewModels
             });
         }
 
-        // Обработка выхода соперника
         private void HandleOpponentLeft(string message)
         {
-            // Если МЫ САМИ вышли - игнорируем это сообщение
             if (iLeavingGame)
             {
                 return;
             }
 
-            // Показываем экран завершения
             ShowGameEndScreen = true;
             IsInGame = false;
 
@@ -455,7 +510,6 @@ namespace RPS.Client.ViewModels
             OnPropertyChanged(nameof(IsNotHostPlayer));
         }
 
-        // Обновление списка игр
         private void UpdateGamesList(string data)
         {
             try
@@ -479,13 +533,16 @@ namespace RPS.Client.ViewModels
             catch { }
         }
 
-        // Обработка результата игры
-        private void ProcessGameResult(string data)
+        private async void ProcessGameResult(string data)
         {
             try
             {
                 GameData gameData = JsonConvert.DeserializeObject<GameData>(data);
 
+                // Запускаем анимацию
+                await PlayRockPaperScissorsAnimation(gameData.PlayerChoice, gameData.OpponentChoice);
+
+                // Обновляем счёт
                 PlayerScore = gameData.PlayerScore;
                 OpponentScore = gameData.OpponentScore;
 
@@ -509,14 +566,62 @@ namespace RPS.Client.ViewModels
                         ResultColor = "#FFC107";
                         break;
                 }
+
+                // Разблокируем кнопки
+                HasPlayerMadeChoice = false;
+                OnPropertyChanged(nameof(CanMakeChoice)); 
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка обработки результата: {ex.Message}");
+                HasPlayerMadeChoice = false;
+                OnPropertyChanged(nameof(CanMakeChoice)); 
             }
         }
 
-        // Отключение от сервера (событие)
+        private async Task PlayRockPaperScissorsAnimation(Choice playerChoice, Choice opponentChoice)
+        {
+            ShowAnimation = true;
+            HideScoreboard = true;
+
+            LeftPlayerEmoji = "✊";
+            RightPlayerEmoji = "✊";
+
+            // Запускаем анимацию через триггер
+            AnimationTrigger = false;
+            await Task.Delay(50); // Небольшая задержка
+            AnimationTrigger = true;
+
+            // Ждём пока анимация тряски отыграет (3 раза по 0.5 сек = 1.5 сек)
+            await Task.Delay(1600);
+
+            // Показываем выбранные фигуры
+            LeftPlayerEmoji = GetChoiceEmoji(playerChoice);
+            RightPlayerEmoji = GetChoiceEmoji(opponentChoice);
+
+            // Держим результат 2.5 секунды
+            await Task.Delay(2500);
+
+            ShowAnimation = false;
+            HideScoreboard = false;
+            AnimationTrigger = false;
+
+            LeftPlayerEmoji = "✊";
+            RightPlayerEmoji = "✊";
+        }
+
+        // Получить эмодзи для выбора
+        private string GetChoiceEmoji(Choice choice)
+        {
+            return choice switch
+            {
+                Choice.Rock => "✊",
+                Choice.Paper => "✋",
+                Choice.Scissors => "✌️",
+                _ => "❓"
+            };
+        }
+
         private void OnDisconnected()
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -530,7 +635,6 @@ namespace RPS.Client.ViewModels
             });
         }
 
-        // Ошибка подключения
         private void OnConnectionError(string error)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -539,7 +643,6 @@ namespace RPS.Client.ViewModels
             });
         }
 
-        // Сброс состояния игры
         private void ResetGameState()
         {
             IsInGame = false;
@@ -549,11 +652,18 @@ namespace RPS.Client.ViewModels
             OpponentName = "Ожидание...";
             ResultMessage = "";
             isHost = false;
+            HasPlayerMadeChoice = false;
+            ShowAnimation = false;
+            HideScoreboard = false;
+            IsShaking = false;
+            AnimationTrigger = false;
+            LeftPlayerEmoji = "✊";
+            RightPlayerEmoji = "✊";
             OnPropertyChanged(nameof(IsHostPlayer));
             OnPropertyChanged(nameof(IsNotHostPlayer));
+            OnPropertyChanged(nameof(CanMakeChoice));
         }
 
-        // Получить текст выбора с эмодзи
         private string GetChoiceText(Choice choice)
         {
             return choice switch
@@ -579,7 +689,6 @@ namespace RPS.Client.ViewModels
         #endregion
     }
 
-    // ViewModel для отображения игровой комнаты
     public class GameRoomViewModel
     {
         public string RoomId { get; set; }

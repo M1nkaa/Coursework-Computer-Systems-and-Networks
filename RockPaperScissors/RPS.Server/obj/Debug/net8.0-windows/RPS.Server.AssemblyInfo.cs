@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RPS.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c9da9ae8db752e48e23fc7ca51f9d1dbcd3993d")]
 [assembly: System.Reflection.AssemblyProductAttribute("RPS.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RPS.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

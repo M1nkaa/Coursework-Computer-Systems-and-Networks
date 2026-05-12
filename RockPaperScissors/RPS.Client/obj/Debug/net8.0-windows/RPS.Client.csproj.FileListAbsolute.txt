@@ -29,3 +29,4 @@ E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\
 E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Client\obj\Debug\net8.0-windows\ref\RPS.Client.dll
 E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Client\obj\Debug\net8.0-windows\App.baml
 E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Client\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.cs
+E:\2 курс\4 сем\Курсовой проект КСиС\RockPaperScissors\RPS.Client\obj\Debug\net8.0-windows\RPS.Client.sourcelink.json
