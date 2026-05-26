@@ -9,5 +9,15 @@
     "C:\\Users\\user\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.77\\microsoft.xaml.behaviors.wpf.1.1.77.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "message": "Произошла ошибка при получении данных уязвимости пакета: Не удалось загрузить индекс служб для источника https://api.nuget.org/v3/index.json.",
+      "projectPath": "E:\\2 курс\\4 сем\\Курсовой проект КСиС\\RockPaperScissors\\RPS.Client\\RPS.Client.csproj",
+      "warningLevel": 1,
+      "filePath": "E:\\2 курс\\4 сем\\Курсовой проект КСиС\\RockPaperScissors\\RPS.Client\\RPS.Client.csproj",
+      "targetGraphs": []
+    }
+  ]
 }

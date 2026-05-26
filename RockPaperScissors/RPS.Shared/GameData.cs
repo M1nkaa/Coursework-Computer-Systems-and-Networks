@@ -1,40 +1,30 @@
-﻿using System;
+using System;
 
 namespace RPS.Shared
 {
-    // Данные о результате игры
+    // Результат одного раунда — сервер отправляет каждому игроку после того,
+    // как оба сделали выбор
     [Serializable]
     public class GameData
     {
-        // Что выбрал игрок
         public Choice PlayerChoice { get; set; }
-
-        // Что выбрал соперник
         public Choice OpponentChoice { get; set; }
-
-        // Результат (победа/поражение/ничья)
         public GameResult Result { get; set; }
-
-        // Счёт игрока
         public int PlayerScore { get; set; }
-
-        // Счёт соперника
         public int OpponentScore { get; set; }
-
-        // Имя соперника
         public string OpponentName { get; set; }
+        public bool IsGameOver { get; set; }       // Серия завершена (FirstTo5)
+        public string GameOverWinner { get; set; } // Имя победителя серии
     }
 
-    // Статистика игрока
+    // Накопленная статистика игрока (победы, поражения, ничьи)
     [Serializable]
     public class PlayerStats
     {
         public string Name { get; set; }
-        public int Wins { get; set; }      // Побед
-        public int Losses { get; set; }    // Поражений
-        public int Draws { get; set; }     // Ничьих
-
-        // Всего игр
+        public int Wins { get; set; }
+        public int Losses { get; set; }
+        public int Draws { get; set; }
         public int TotalGames => Wins + Losses + Draws;
     }
 }

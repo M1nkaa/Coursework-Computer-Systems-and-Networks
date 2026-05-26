@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
 namespace RPS.Client.Converters
 {
+    // Инвертирующий конвертер видимости: true → Collapsed, false → Visible.
+    // Нужен там, где элемент должен скрываться при истинном условии.
     public class InverseBooleanToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

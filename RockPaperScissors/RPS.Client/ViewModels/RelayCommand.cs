@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace RPS.Client.ViewModels
 {
+    // Простая реализация ICommand: оборачивает Action и опциональный предикат CanExecute
     public class RelayCommand : ICommand
     {
         private readonly Action execute;
@@ -25,12 +26,14 @@ namespace RPS.Client.ViewModels
             execute();
         }
 
+        // WPF сам переспрашивает CanExecute при любом изменении UI
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
 
+        // Принудительно сбрасывает кэш CanExecute для всех команд
         public void RaiseCanExecuteChanged()
         {
             CommandManager.InvalidateRequerySuggested();
@@ -42,7 +45,7 @@ namespace RPS.Client.ViewModels
     {
         private readonly Func<Task> execute;
         private readonly Func<bool> canExecute;
-        private bool isExecuting;
+        private bool isExecuting; // блокирует повторный вызов пока команда выполняется
 
         public AsyncRelayCommand(Func<Task> execute, Func<bool> canExecute = null)
         {

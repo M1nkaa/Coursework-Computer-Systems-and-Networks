@@ -1,7 +1,7 @@
-﻿<Window x:Class="RPS.Server.MainWindow"
+<Window x:Class="RPS.Server.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="🎮 Сервер - Камень Ножницы Бумага" 
+        Title="🎮 Сервер — Камень Ножницы Бумага" 
         Height="750" Width="1100"
         WindowStartupLocation="CenterScreen">
 
@@ -21,81 +21,45 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="🎮 Игровой сервер" 
-                              Style="{StaticResource Headline4}"
-                              Margin="0,0,0,5"/>
-                    <TextBlock x:Name="StatusText" 
-                              Text="Сервер остановлен"
-                              Style="{StaticResource Body1}"
-                              Foreground="{StaticResource SecondaryColor}"/>
+                    <TextBlock Text="🎮 Игровой сервер" Style="{StaticResource Headline4}" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="StatusText" Text="Сервер остановлен"
+                              Style="{StaticResource Body1}" Foreground="{StaticResource SecondaryColor}"/>
                 </StackPanel>
 
-                <!-- Кнопка запуска/остановки -->
-                <Button x:Name="StartStopButton"
-                       Grid.Column="1"
+                <Button x:Name="StartStopButton" Grid.Column="1"
                        Content="▶️ ЗАПУСТИТЬ"
                        Click="StartStopButton_Click"
-                       Width="180"
-                       Height="50"/>
+                       Width="180" Height="50"/>
             </Grid>
         </Border>
 
         <!-- СТАТИСТИКА -->
         <Border Grid.Row="1" Style="{StaticResource Card}" Margin="0,0,0,20">
             <UniformGrid Rows="1" Columns="4">
-
-                <!-- Всего подключений -->
                 <StackPanel Margin="10">
-                    <TextBlock Text="👥 Игроков онлайн" 
-                              Style="{StaticResource Body1}"
-                              HorizontalAlignment="Center"
-                              Opacity="0.7"/>
-                    <TextBlock x:Name="PlayersOnlineText" 
-                              Text="0"
-                              Style="{StaticResource Headline4}"
-                              HorizontalAlignment="Center"
-                              Foreground="{StaticResource PrimaryColor}"/>
+                    <TextBlock Text="👥 Игроков онлайн" Style="{StaticResource Body1}"
+                              HorizontalAlignment="Center" Opacity="0.7"/>
+                    <TextBlock x:Name="PlayersOnlineText" Text="0" Style="{StaticResource Headline4}"
+                              HorizontalAlignment="Center" Foreground="{StaticResource PrimaryColor}"/>
                 </StackPanel>
-
-                <!-- Активных игр -->
                 <StackPanel Margin="10">
-                    <TextBlock Text="🎲 Активных игр" 
-                              Style="{StaticResource Body1}"
-                              HorizontalAlignment="Center"
-                              Opacity="0.7"/>
-                    <TextBlock x:Name="ActiveGamesText" 
-                              Text="0"
-                              Style="{StaticResource Headline4}"
-                              HorizontalAlignment="Center"
-                              Foreground="{StaticResource SecondaryColor}"/>
+                    <TextBlock Text="🎲 Активных игр" Style="{StaticResource Body1}"
+                              HorizontalAlignment="Center" Opacity="0.7"/>
+                    <TextBlock x:Name="ActiveGamesText" Text="0" Style="{StaticResource Headline4}"
+                              HorizontalAlignment="Center" Foreground="{StaticResource SecondaryColor}"/>
                 </StackPanel>
-
-                <!-- В очереди -->
                 <StackPanel Margin="10">
-                    <TextBlock Text="⏳ В очереди" 
-                              Style="{StaticResource Body1}"
-                              HorizontalAlignment="Center"
-                              Opacity="0.7"/>
-                    <TextBlock x:Name="WaitingPlayersText" 
-                              Text="0"
-                              Style="{StaticResource Headline4}"
-                              HorizontalAlignment="Center"
-                              Foreground="#FFA726"/>
+                    <TextBlock Text="⏳ В очереди" Style="{StaticResource Body1}"
+                              HorizontalAlignment="Center" Opacity="0.7"/>
+                    <TextBlock x:Name="WaitingPlayersText" Text="0" Style="{StaticResource Headline4}"
+                              HorizontalAlignment="Center" Foreground="#FFA726"/>
                 </StackPanel>
-
-                <!-- Всего игр -->
                 <StackPanel Margin="10">
-                    <TextBlock Text="📊 Всего игр" 
-                              Style="{StaticResource Body1}"
-                              HorizontalAlignment="Center"
-                              Opacity="0.7"/>
-                    <TextBlock x:Name="TotalGamesText" 
-                              Text="0"
-                              Style="{StaticResource Headline4}"
-                              HorizontalAlignment="Center"
-                              Foreground="#66BB6A"/>
+                    <TextBlock Text="📊 Раундов сыграно" Style="{StaticResource Body1}"
+                              HorizontalAlignment="Center" Opacity="0.7"/>
+                    <TextBlock x:Name="TotalGamesText" Text="0" Style="{StaticResource Headline4}"
+                              HorizontalAlignment="Center" Foreground="#66BB6A"/>
                 </StackPanel>
-
             </UniformGrid>
         </Border>
 
@@ -115,12 +79,10 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" 
-                              Text="👥 Подключенные игроки"
-                              Style="{StaticResource Headline6}"
-                              Padding="0,0,0,15"/>
+                    <TextBlock Grid.Row="0" Text="👥 Подключенные игроки"
+                              Style="{StaticResource Headline6}" Padding="0,0,0,15"/>
 
-                    <ListView x:Name="PlayersListView" Grid.Row="1" 
+                    <ListView x:Name="PlayersListView" Grid.Row="1"
                               Background="Transparent" BorderThickness="0"
                               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListView.ItemTemplate>
@@ -132,17 +94,22 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Ellipse Grid.Column="0" Width="10" Height="10" Fill="#4CAF50" Margin="0,0,10,0"/>
+                                    <Ellipse Grid.Column="0" Width="10" Height="10"
+                                             Fill="#4CAF50" Margin="0,0,10,0"/>
 
+                                    <!-- Имя и статус -->
                                     <StackPanel Grid.Column="1">
                                         <TextBlock Text="{Binding PlayerName}" FontWeight="Bold"/>
                                         <TextBlock Text="{Binding Status}" Opacity="0.7" FontSize="11"/>
                                     </StackPanel>
 
-                                    <TextBlock Grid.Column="2" 
+                                    <!-- Кубок в конце строки -->
+                                    <TextBlock Grid.Column="2"
                                               Text="{Binding Score, StringFormat='🏆 {0}'}"
                                               VerticalAlignment="Center"
-                                              Foreground="{StaticResource SecondaryColor}"/>
+                                              Foreground="#00BCD4"
+                                              FontWeight="SemiBold"
+                                              FontSize="13"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -161,66 +128,44 @@
 
                     <Grid Grid.Row="0" Margin="0,0,0,15">
                         <TextBlock Text="📋 Журнал событий" Style="{StaticResource Headline6}"/>
-
                         <Button Content="🗑️ Очистить"
                                Click="ClearLog_Click"
                                HorizontalAlignment="Right"
-                               Padding="10,5"
-                               FontSize="12"
+                               Padding="10,5" FontSize="12"
                                Background="#F44336"/>
                     </Grid>
 
-                    <ScrollViewer x:Name="LogScrollViewer" 
-                                  Grid.Row="1"
+                    <ScrollViewer x:Name="LogScrollViewer" Grid.Row="1"
                                   VerticalScrollBarVisibility="Auto">
-                        <TextBlock x:Name="LogTextBlock" 
+                        <TextBlock x:Name="LogTextBlock"
                                   TextWrapping="Wrap"
                                   FontFamily="Consolas"
                                   FontSize="12"
                                   LineHeight="18"/>
                     </ScrollViewer>
 
-                    <!-- IP и Порт сервера -->
-                    <Border Grid.Row="2" 
-        Background="#2D2D30" 
-        CornerRadius="5" 
-        Padding="15,10" 
-        Margin="0,10,0,0">
+                    <!-- IP и Порт -->
+                    <Border Grid.Row="2" Background="#2D2D30" CornerRadius="5"
+                            Padding="15,10" Margin="0,10,0,0">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="10" ShadowDepth="3" Opacity="0.3"/>
                         </Border.Effect>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <StackPanel Orientation="Horizontal" Margin="0,0,30,0">
-                                <TextBlock Text="🌐 IP:" 
-                      VerticalAlignment="Center" 
-                      Margin="0,0,10,0"
-                      Foreground="White"
-                      FontWeight="SemiBold"/>
-                                <TextBlock x:Name="ServerIpText" 
-                      Text="Не определён"
-                      FontWeight="Bold"
-                      Foreground="#00BCD4"
-                      VerticalAlignment="Center"
-                      FontSize="14"/>
+                                <TextBlock Text="🌐 IP:" VerticalAlignment="Center"
+                                           Margin="0,0,10,0" Foreground="White" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="ServerIpText" Text="Не определён"
+                                           FontWeight="Bold" Foreground="#00BCD4"
+                                           VerticalAlignment="Center" FontSize="14"/>
                             </StackPanel>
-
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="🔌 Порт:" 
-                      VerticalAlignment="Center" 
-                      Margin="0,0,10,0"
-                      Foreground="White"
-                      FontWeight="SemiBold"/>
-                                <TextBox x:Name="PortTextBox" 
-                    Text="5000" 
-                    Width="80" 
-                    VerticalAlignment="Center" 
-                    Padding="5,3"
-                    Background="#3F3F46"
-                    Foreground="White"
-                    BorderBrush="#666"
-                    BorderThickness="1"
-                    FontSize="14"
-                    FontWeight="Bold"/>
+                                <TextBlock Text="🔌 Порт:" VerticalAlignment="Center"
+                                           Margin="0,0,10,0" Foreground="White" FontWeight="SemiBold"/>
+                                <TextBox x:Name="PortTextBox" Text="5000" Width="80"
+                                         VerticalAlignment="Center" Padding="5,3"
+                                         Background="#3F3F46" Foreground="White"
+                                         BorderBrush="#666" BorderThickness="1"
+                                         FontSize="14" FontWeight="Bold"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>

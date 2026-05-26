@@ -1,30 +1,34 @@
-﻿using System;
+using System;
 
 namespace RPS.Shared
 {
-    // Информация об игровой комнате
+    // Описание одной игровой комнаты — используется для списка доступных игр в лобби
     [Serializable]
     public class GameRoom
     {
-        public string RoomId { get; set; }           // Уникальный ID комнаты
-        public string HostName { get; set; }         // Имя создателя
-        public string GuestName { get; set; }        // Имя гостя (если есть)
-        public bool IsFull { get; set; }             // Комната заполнена?
-        public DateTime Created { get; set; }        // Время создания
+        public string RoomId { get; set; }
+        public string HostName { get; set; }
+        public string GuestName { get; set; }
+        public bool IsFull { get; set; }
+        public DateTime Created { get; set; }
+        public GameMode Mode { get; set; }  // Режим игры
 
         public GameRoom()
         {
             RoomId = Guid.NewGuid().ToString();
             Created = DateTime.Now;
             IsFull = false;
+            Mode = GameMode.Infinite;
         }
 
+        // Строка для отображения в списке лобби: статус, игроки, режим
         public string GetDisplayName()
         {
+            string modeTag = Mode == GameMode.FirstTo5 ? " [до 5]" : " [∞]";
             if (IsFull)
-                return $"🔴 {HostName} vs {GuestName} (Играют)";
+                return $"🔴 {HostName} vs {GuestName} (Играют){modeTag}";
             else
-                return $"🟢 Игра {HostName} (Ожидает игрока)";
+                return $"🟢 Игра {HostName} (Ожидает){modeTag}";
         }
     }
 }

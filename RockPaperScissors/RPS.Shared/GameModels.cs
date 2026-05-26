@@ -1,41 +1,56 @@
-﻿namespace RPS.Shared
+namespace RPS.Shared
 {
-    // Перечисление выборов игрока
+    // Возможные фигуры: камень, бумага, ножницы
     public enum Choice
     {
-        None,      // Ничего не выбрано
-        Rock,      // Камень
-        Paper,     // Бумага
-        Scissors   // Ножницы
+        None,
+        Rock,
+        Paper,
+        Scissors
     }
 
-    // Результат игры
+    // Результат раунда с точки зрения одного игрока
     public enum GameResult
     {
-        None,  // Результата ещё нет
-        Win,   // Победа
-        Lose,  // Поражение
-        Draw   // Ничья
+        None,
+        Win,
+        Lose,
+        Draw
     }
 
-    // Типы сообщений между клиентом и сервером
+    // Режим игры: бесконечные раунды или серия до 5 побед
+    public enum GameMode
+    {
+        Infinite,       // Бесконечный режим
+        FirstTo5        // Первый до 5 побед
+    }
+
+    // Типы сетевых сообщений между клиентом и сервером
     public enum MessageType
     {
-        Connect,           // Подключение к серверу
-        Disconnect,        // Отключение
-        CreateGame,        // Создать новую игру
-        GetGamesList,      // Получить список игр
-        GamesList,         // Ответ со списком игр
-        JoinGame,          // Присоединиться к игре
-        GameJoined,        // Успешно присоединился
-        GameFull,          // Игра заполнена
-        GameStarted,       // Игра началась
-        MakeChoice,        // Игрок сделал выбор
-        OpponentMadeChoice, // НОВОЕ: Соперник сделал выбор
-        GameResult,        // Результат раунда
-        OpponentLeft,      // Соперник вышел
-        LeaveGame,         // Покинуть игру
-        ChatMessage,       // Сообщение в чат
-        Error              // Ошибка
+        Connect,
+        Disconnect,
+        CreateGame,
+        GetGamesList,
+        GamesList,
+        JoinGame,
+        GameJoined,
+        GameFull,
+        GameStarted,
+        MakeChoice,
+        OpponentMadeChoice,
+        GameResult,
+        OpponentLeft,
+        LeaveGame,
+        ChatMessage,
+        Error,
+        PlayerAfk,          // Игрок кикнут за AFK
+        OpponentAfk,        // Оппонент кикнут за AFK — этому игроку засчитывается победа
+        TimerUpdate,        // Обновление таймера (секунды)
+        GameOver,           // Конец серии (режим FirstTo5)
+        RematchRequest,     // Игрок хочет сыграть ещё
+        RematchAccepted,    // Оба согласны — новая игра в том же лобби
+        RematchDeclined,    // Один из игроков отказался / вышел в лобби
+        AnimationDone       // Клиент завершил анимацию, таймер можно запускать
     }
 }

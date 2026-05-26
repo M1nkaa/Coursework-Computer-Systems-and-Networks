@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -6,6 +6,8 @@ using RPS.Shared;
 
 namespace RPS.Client.Services
 {
+    // Отвечает за TCP-соединение со стороны клиента:
+    // подключение, отправку сообщений и фоновое прослушивание входящих пакетов
     public class NetworkService
     {
         private TcpClient client;
@@ -34,7 +36,7 @@ namespace RPS.Client.Services
                     PlayerName = playerName
                 });
 
-                // Запускаем прослушивание сообщений
+                // Запускаем прослушивание сообщений в фоне
                 _ = Task.Run(ListenForMessagesAsync);
 
                 return true;
@@ -67,6 +69,7 @@ namespace RPS.Client.Services
         private async Task ListenForMessagesAsync()
         {
             byte[] buffer = new byte[4096];
+            var incomplete = new System.Text.StringBuilder();
 
             while (isConnected)
             {
@@ -80,11 +83,29 @@ namespace RPS.Client.Services
                         break;
                     }
 
-                    string json = Encoding.UTF8.GetString(buffer, 0, bytesRead).Trim();
-                    NetworkMessage message = NetworkMessage.FromJson(json);
+                    string chunk = Encoding.UTF8.GetString(buffer, 0, bytesRead);
+                    incomplete.Append(chunk);
 
-                    // Уведомляем UI о новом сообщении
-                    MessageReceived?.Invoke(message);
+                    // Разбираем все полные сообщения (разделитель \n)
+                    string accumulated = incomplete.ToString();
+                    int newlinePos;
+                    while ((newlinePos = accumulated.IndexOf('\n')) >= 0)
+                    {
+                        string line = accumulated.Substring(0, newlinePos).Trim();
+                        accumulated = accumulated.Substring(newlinePos + 1);
+
+                        if (string.IsNullOrEmpty(line)) continue;
+
+                        try
+                        {
+                            NetworkMessage message = NetworkMessage.FromJson(line);
+                            if (message != null)
+                                MessageReceived?.Invoke(message);
+                        }
+                        catch { /* пропускаем битое сообщение, не рвём соединение */ }
+                    }
+                    incomplete.Clear();
+                    incomplete.Append(accumulated);
                 }
                 catch (Exception)
                 {
