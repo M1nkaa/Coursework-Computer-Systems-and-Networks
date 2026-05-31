@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RPS.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b002c181aa30a47ee4d1ffc4d0402f3179ddaf57")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ec7ba2b41945fe71724745acb399e68adf13c2e")]
 [assembly: System.Reflection.AssemblyProductAttribute("RPS.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RPS.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

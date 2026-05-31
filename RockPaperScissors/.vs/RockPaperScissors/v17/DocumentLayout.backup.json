@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A51BDD77-9793-464B-980B-A03C44B05738}|RPS.Server\\RPS.Server.csproj|e:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u043A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u043A\u0441\u0438\u0441\\rockpaperscissors\\rps.server\\gameserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A51BDD77-9793-464B-980B-A03C44B05738}|RPS.Server\\RPS.Server.csproj|solutionrelative:rps.server\\gameserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A52AB6CD-7E0A-485B-A684-6FCD0BDB88CC}|RPS.Client\\RPS.Client.csproj|e:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u043A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u043A\u0441\u0438\u0441\\rockpaperscissors\\rps.client\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A52AB6CD-7E0A-485B-A684-6FCD0BDB88CC}|RPS.Client\\RPS.Client.csproj|solutionrelative:rps.client\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A52AB6CD-7E0A-485B-A684-6FCD0BDB88CC}|RPS.Client\\RPS.Client.csproj|e:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u043A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u043A\u0441\u0438\u0441\\rockpaperscissors\\rps.client\\converters\\booltoopacityconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A52AB6CD-7E0A-485B-A684-6FCD0BDB88CC}|RPS.Client\\RPS.Client.csproj|solutionrelative:rps.client\\converters\\booltoopacityconverter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A51BDD77-9793-464B-980B-A03C44B05738}|RPS.Server\\RPS.Server.csproj|e:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u043A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u043A\u0441\u0438\u0441\\rockpaperscissors\\rps.server\\gameserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A51BDD77-9793-464B-980B-A03C44B05738}|RPS.Server\\RPS.Server.csproj|solutionrelative:rps.server\\gameserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{16701699-1AB7-47E0-B6AE-682BA2A74D5C}|RPS.Shared\\RPS.Shared.csproj|e:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u043A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u043A\u0441\u0438\u0441\\rockpaperscissors\\rps.shared\\gamemodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -62,23 +62,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Client\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "RPS.Client\\MainWindow.xaml.cs",
-              "ToolTip": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Client\\MainWindow.xaml.cs",
-              "RelativeToolTip": "RPS.Client\\MainWindow.xaml.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAADwv0YAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-12T10:50:12.04Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "BoolToOpacityConverter.cs",
               "DocumentMoniker": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Client\\Converters\\BoolToOpacityConverter.cs",
               "RelativeDocumentMoniker": "RPS.Client\\Converters\\BoolToOpacityConverter.cs",
@@ -91,19 +79,44 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "GameServer.cs",
+              "DocumentMoniker": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Server\\GameServer.cs",
+              "RelativeDocumentMoniker": "RPS.Server\\GameServer.cs",
+              "ToolTip": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Server\\GameServer.cs",
+              "RelativeToolTip": "RPS.Server\\GameServer.cs",
+              "ViewState": "AgIAAE4CAAAAAAAAAAAAAEQBAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-03T09:48:05.825Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Client\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "RPS.Client\\MainWindow.xaml.cs",
+              "ToolTip": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Client\\MainWindow.xaml.cs",
+              "RelativeToolTip": "RPS.Client\\MainWindow.xaml.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAADwv0YAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-12T10:50:12.04Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "MainViewModel.cs",
               "DocumentMoniker": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Client\\ViewModels\\MainViewModel.cs",
               "RelativeDocumentMoniker": "RPS.Client\\ViewModels\\MainViewModel.cs",
               "ToolTip": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Client\\ViewModels\\MainViewModel.cs",
               "RelativeToolTip": "RPS.Client\\ViewModels\\MainViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEcBAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAEcBAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-03T09:48:53.906Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Client\\MainWindow.xaml",
               "RelativeDocumentMoniker": "RPS.Client\\MainWindow.xaml",
@@ -114,7 +127,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "App.xaml",
               "DocumentMoniker": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Client\\App.xaml",
               "RelativeDocumentMoniker": "RPS.Client\\App.xaml",
@@ -122,18 +135,6 @@
               "RelativeToolTip": "RPS.Client\\App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-05-05T11:16:14.697Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "GameServer.cs",
-              "DocumentMoniker": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Server\\GameServer.cs",
-              "RelativeDocumentMoniker": "RPS.Server\\GameServer.cs",
-              "ToolTip": "E:\\2 \u043A\u0443\u0440\u0441\\4 \u0441\u0435\u043C\\\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442 \u041A\u0421\u0438\u0421\\RockPaperScissors\\RPS.Server\\GameServer.cs",
-              "RelativeToolTip": "RPS.Server\\GameServer.cs",
-              "ViewState": "AgIAAC0BAAAAAAAAAADwv0QBAABjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-03T09:48:05.825Z"
             },
             {
               "$type": "Document",
